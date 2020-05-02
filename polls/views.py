@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def index(request):
-    return HttpResponse("Welcome to the FakeNewsDetector Project" )
+def accueil(request):
+    return render(request, 'polls/accueil.html', locals())
 # Create your views here.
