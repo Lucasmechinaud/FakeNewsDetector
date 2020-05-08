@@ -1,0 +1,13 @@
+
+{% extends "base.html"%}
+{% block content %}
+<h2>Welcome to our FakeNews Detector</h2>
+<p> You can test your article just below</p>
+<form action="/Article/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+<p> Score of your article: {{score}}</p>
+<p> your article is quite reliable!</p>
+{% endblock %}
