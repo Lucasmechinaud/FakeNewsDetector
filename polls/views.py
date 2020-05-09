@@ -8,16 +8,16 @@ from .forms import ArticleUrl
 def score_creation():
     #calcul du score...
 
-    score = 95
+    score = 75
     return(locals())
 def submit_article(request):
-    form = ArticleUrl(request.POST or None)
-    if form.is_valid():
-        article = form.cleaned_data['Article']
-
-    return(render(request, 'polls/submit_article.html', locals()))
+    form = ArticleUrl(request.POST)
+    return (render(request, 'polls/submit_article.html', locals()))
 
 def send_results(request):
+    form = ArticleUrl(request.POST)
+    if form.is_valid():
+        article = form.cleaned_data['Article']
     score = score_creation().get('score')
     if score >= 90:
         return(render(request,'polls/results_positive.html',locals()))

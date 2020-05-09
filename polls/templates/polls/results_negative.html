@@ -1,5 +1,4 @@
-{% extends "base.html"%}
-{% block content %}
+<center>
 <h2>Welcome to our FakeNews Detector</h2>
 <p> You can test your article just below</p>
 <form action="/Article/" method="post">
@@ -7,6 +6,9 @@
     {{ form }}
     <input type="submit" value="Submit">
 </form>
-<p> Score of your article: {{score.score}}</p>
-<p> FakeNews detected!</p>
-{% endblock %}
+    <footer>&copy; FakeNews detector_Nolwenn_S&Lucas_M</footer>
+    <p> Score of your article: {{score}}</p>
+    <p> FakeNews detected!</p>
+    <p>URL de l'article : {{article}}</p>
+</center>
+
