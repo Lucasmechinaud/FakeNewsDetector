@@ -5,20 +5,39 @@ import newspaper
 import newsapi
 from newsapi import NewsApiClient
 from newspaper import Article
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+import newspaper
+import newsapi
+from newsapi import NewsApiClient
+from newspaper import Article
 
 newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
 
-url = 'http://www.legorafi.fr/2020/04/16/manuel-valls-ecope-dune-amende-pour-non-respect-du-confinement-apres-avoir-dormi-sur-le-paillasson-demmanuel-macron/'
+url = 'https://edition.cnn.com/2020/05/08/uk/queen-elizabeth-ve-day-speech-scli-gbr-intl/index.html'
 article = Article(url)
 article.download()
 article.parse()
 article.nlp()
 text_file = open("text_1.txt", "w")
-n = text_file.write(article.title)
+n = text_file.write(article.text)
 text_file.close()
-text_1=open('text_1.txt')
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
+lines=['' for i in range(1000)]
+j=0
+with open("text_1.txt","r") as file:
+    for line in file:
+        for word in line.split():
+            if word!="\n":
+                lines[j]+=word
+                lines[j]+=' '
+        j=j+1
+file.close()
+text_file_3=open("text_2.txt","w")
+for i in range(len(lines)):
+     if lines[i]!="\n":
+         text_file_3.write(lines[i])
+text_file_3.close()
+text_1=open('text_2.txt')
 
 vectorizer = TfidfVectorizer()
 X = vectorizer.fit_transform(text_1)
