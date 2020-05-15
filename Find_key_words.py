@@ -58,9 +58,9 @@ for j in range(5):
     indices_max[j]=ind_max
     X[0][ind_max]=0
 for i in range(5):
-    key_words[i]='+'
-    key_words[i]+=vectorizer.get_feature_names()[indices_max[i]]
+    #key_words[i]='+'
+    key_words[i]=vectorizer.get_feature_names()[indices_max[i]]
 print(key_words)
 
-recherche=newsapi.get_everything(qintitle=key_words[3])
+recherche=newsapi.get_everything(qintitle=(key_words[0]))
 print(recherche)

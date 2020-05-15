@@ -11,6 +11,7 @@ article.download()
 article.parse()
 article.nlp()
 
+#utiliser "find" pour trouver les caractères à remplacer
 source = article.source_url
 print(source)
 
@@ -30,6 +31,7 @@ file.close()
 text_file = open("source_sans_https",'w')
 i=0
 while letters[i]!='':
+#utiliser replace à la place de la boucle
     if letters[i]=='w' and letters[i+1]=='w' and letters[i+2]=='w' and letters[i+3]=='.':
         j=4
         while letters[i+j]!='':
