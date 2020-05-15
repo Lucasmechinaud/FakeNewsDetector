@@ -8,6 +8,7 @@ newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
 #le squelette de la fonction serait le suivant:
 #def compare():
 all_articles = newsapi.get_everything(q='France')
+
 Total_number= all_articles.get("totalResults")
 
 #definition des seuils:
