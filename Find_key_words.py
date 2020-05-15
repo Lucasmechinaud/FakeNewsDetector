@@ -14,7 +14,7 @@ from newspaper import Article
 
 newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
 
-url = 'http://www.legorafi.fr/2020/05/13/miracle-un-pot-de-moutarde-a-nouveau-reincarne-en-verre-deau/'
+url = 'https://www.bbc.com/news/health-52674739'
 article = Article(url)
 article.download()
 article.parse()
@@ -58,9 +58,12 @@ for j in range(5):
     indices_max[j]=ind_max
     X[0][ind_max]=0
 for i in range(5):
-    #key_words[i]='+'
     key_words[i]=vectorizer.get_feature_names()[indices_max[i]]
+    word_list = list(key_words[i])
+    word_list.insert(0, '+')
+    key_words[i] = ''.join(word_list)
+
 print(key_words)
 
-recherche=newsapi.get_everything(qintitle=(key_words[0]))
+recherche=newsapi.get_everything(qintitle=(key_words[0] + key_words[1])+ key_words[2])
 print(recherche)
