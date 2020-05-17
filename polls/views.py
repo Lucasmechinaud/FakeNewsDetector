@@ -14,18 +14,23 @@ def score_creation(request):
     if form.is_valid():
         url = form.cleaned_data['Article']
         article = Article(url)
-        #On calcule le score une première fois avec le module newspaper3k
+        # Let's calculate the score with an "automatic" method : key words in the whole article
+        # Getting the article
         article.download()
         article.parse()
         article.nlp()
+        # Getting the key words
         key_words = article.keywords
+        # Finding the articles in the data base that match the key-words (in their core)
         all_articles = newsapi.get_everything(q=(
                     key_words[0] and key_words[1] and key_words[2] and key_words[3] and key_words[4] and key_words[
                 5] and key_words[6] and key_words[7] and key_words[8] and key_words[9] and key_words[10] and key_words[
                         11] and key_words[12] and key_words[13]))
+        # Getting the number of articles
         Total_number = all_articles.get("totalResults")
+        # That's the first score
         score_1=Total_number
-        #On calcule le second score avec le module sklearn
+        # Let's calculate the score with a "manual" method  : key words in the title.
 
         score=(score_1+score_2)/2
 
