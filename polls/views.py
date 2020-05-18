@@ -8,7 +8,6 @@ from newspaper import Article
 newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
 
 # Create your views here.
-#la fonction score_creation est pour l'instant en pseudo-code
 def score_creation(request):
     form = ArticleUrl(request.POST)
     if form.is_valid():
