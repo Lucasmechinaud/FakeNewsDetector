@@ -15,9 +15,10 @@ newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
 
 # Create your views here.
 def score_creation(request):
+    #Call of a "AtrticelUrl" form
     form = ArticleUrl(request.POST)
-    if form.is_valid():
-        url = form.cleaned_data['Article']
+    if form.is_valid(): #Check if form is valid
+        url = form.cleaned_data['Article'] #Get the data
         article = Article(url)
         # Let's calculate the score with an "automatic" method : key words in the whole article
         # Getting the article
@@ -92,10 +93,12 @@ def score_creation(request):
     return(locals())
 
 def submit_article(request):
+    #Creation of the website first page
     form = ArticleUrl(request.POST)
     return (render(request, 'polls/submit_article.html', locals()))
 
 def send_results(request):
+    #Creation of the result page depending on the score value
     score = score_creation(request).get('score')
     if score >= 100:
         return(render(request,'polls/results_positive.html',locals()))
