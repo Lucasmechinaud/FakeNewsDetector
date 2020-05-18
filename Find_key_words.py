@@ -91,6 +91,8 @@ article.nlp()
 # # Getting the number of articles, ie. the score
 # score_1 = all_articles.get("totalResults")
 # print(score_1)
+# Let's look in the data base for articles whose title have all the key words.
+recherche=newsapi.get_everything(qintitle=(key_words[0] + key_words[1]+ key_words[2]))
 
 source = article.source_url
 print(source)
