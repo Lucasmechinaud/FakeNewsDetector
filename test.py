@@ -7,7 +7,7 @@ import newsapi
 from newsapi import NewsApiClient
 from newspaper import Article
 newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
-url = 'https://www.nytimes.com/2020/05/19/us/coronavirus-usa-live.html?action=click&module=Spotlight&pgtype=Homepage' #Get the data
+url = 'https://www.faz.net/aktuell/politik/ausland/vorwurf-der-zensur-ein-politisches-lied-wuehlt-polen-auf-16776033.html' #Get the data
 article = Article(url)
 # Let's calculate the score with an "automatic" method : key words in the whole article
 # Getting the article
@@ -21,7 +21,7 @@ for i in range(5):
     word_list.insert(0,'+')  # we absolutely want those words in the article : putting + before make it mandatory.
     key_words[i] = ''.join(word_list)
 # Finding the articles in the data base that match the three first key-words (in their core)
-all_articles = newsapi.get_everything(q=(key_words[0] + key_words[1] + key_words[2] + key_words[3] + key_words[4]))
+all_articles = newsapi.get_everything(q=(key_words[0] + key_words[1] + key_words[2]))
 # Getting the number of articles, ie. the score
 score_1 = all_articles.get("totalResults")
 # Let's calculate the score with a "manual" method  : key words in the title.
