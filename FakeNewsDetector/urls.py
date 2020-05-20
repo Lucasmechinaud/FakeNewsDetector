@@ -20,5 +20,6 @@ from polls import views
 urlpatterns = [
     path('submit_article/', views.submit_article, name='submit_article'),
     path('Article/', views.send_results),
+    path('Retry/',views.retry),
     path('admin/', admin.site.urls),
 ]

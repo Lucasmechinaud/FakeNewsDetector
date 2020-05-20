@@ -1,10 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import ArticleUrl
-import newspaper
-import newsapi
-from newsapi import NewsApiClient
-from newspaper import Article
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 import newspaper
@@ -68,7 +64,7 @@ def score_creation(request):
                              '+')  # we absolutely want those words in the title : putting + before make it mandatory.
             key_words_2[i] = ''.join(word_list)
         # Let's look in the data base for articles whose title have all the key words.
-        recherche = newsapi.get_everything(qintitle=(key_words_2[0] + key_words_2[1] + key_words_2[2]))
+        recherche = newsapi.get_everything(qintitle=(key_words_2[0] + key_words_2[1]))
         score_2 = recherche.get("totalResults")
         score=(score_1+score_2)/2
         score =score*100/500
@@ -86,9 +82,17 @@ def score_creation(request):
         if source.find('edition.') != -1: # especially because cnn is sometimes referenced as edition.cnn
             source = source.replace('edition.', '')
         # Finding all the articles from that source
-        recherche_source = newsapi.get_everything(domains=source)
-        number_of_article=recherche_source.get("totalResults")
-        if number_of_article > 500:
+        i = 0
+        source_2 = ''
+        while source[i] != '.':
+            source_2 += source[i]
+            i = i + 1
+        print(source_2)
+        # Finding all the articles from that source
+        recherche_source = newsapi.get_everything(q=source_2)
+        number_of_article = recherche_source.get("totalResults")
+        print(number_of_article)
+        if number_of_article > 100:
             score = 100
     return(locals())
 
@@ -106,3 +110,6 @@ def send_results(request):
         return(render(request,'polls/results_medium.html',locals()))
     else:
         return (render(request, 'polls/results_negative.html', locals()))
+def retry(request):
+    form = ArticleUrl(request.POST)
+    return (render(request, 'polls/submit_article.html', locals()))

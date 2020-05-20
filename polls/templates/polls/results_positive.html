@@ -2,13 +2,14 @@
     <body style="background-color:powderblue;">
 <h2><FONT size = "+4" face="Calibri" >Welcome to our Fake News Detector</FONT></h2>
     <p> <FONT size = "+2" face = "Calibri">You can test your article just below</FONT></p>
-<form action="/Article/" method="post">
+<form action="/Retry/" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Test New Article">
 </form>
     <p> <FONT size = "+1" face = "Calibri">Score of your article: {{score}}</FONT></p>
     <p> <FONT size = "+1" face = "Calibri">Your article is quite reliable!</FONT></p>
     <footer><FONT face = "Calibri">&copy; Fake News detector_Nolwenn_S&Lucas_M</FONT></footer>
+    <img src="https://www.pinterest.fr/pin/206180489169169669/" alt="This is an animated gif image, but it does not move"/>
 </center>
 
