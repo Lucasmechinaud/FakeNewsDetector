@@ -67,7 +67,7 @@ def score_creation(request):
         recherche = newsapi.get_everything(qintitle=(key_words_2[0] + key_words_2[1]))
         score_2 = recherche.get("totalResults")
         score=(score_1+score_2)/2
-        score =score*100/500
+        score =score*100/100
         if score >100:
             score =100
         # Let's find if the source can be trusted
@@ -92,6 +92,7 @@ def score_creation(request):
         recherche_source = newsapi.get_everything(q=source_2)
         number_of_article = recherche_source.get("totalResults")
         print(number_of_article)
+        #if there are more then 100 articles from that source, we consider automatically that the article is 100 % reliable
         if number_of_article > 100:
             score = 100
     return(locals())
@@ -111,5 +112,6 @@ def send_results(request):
     else:
         return (render(request, 'polls/results_negative.html', locals()))
 def retry(request):
+    #Permit a return to the first page
     form = ArticleUrl(request.POST)
     return (render(request, 'polls/submit_article.html', locals()))
