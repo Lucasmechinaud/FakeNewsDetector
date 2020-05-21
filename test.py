@@ -7,7 +7,7 @@ import newsapi
 from newsapi import NewsApiClient
 from newspaper import Article
 newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
-url = 'https://www.faz.net/aktuell/politik/ausland/vorwurf-der-zensur-ein-politisches-lied-wuehlt-polen-auf-16776033.html' #Get the data
+url = 'https://www.theguardian.com/world/2020/may/21/global-report-coronavirus-vaccine-us-scientist-cases-5-million' #Get the data
 article = Article(url)
 # Let's calculate the score with an "automatic" method : key words in the whole article
 # Getting the article
@@ -63,8 +63,6 @@ score_2 = recherche.get("totalResults")
 print(score_1,score_2)
 score=(score_1+score_2)/2
 score =score*100/100
-if score >100:
-    score =100
 # Let's find if the source can be trusted
 source = article.source_url
 # Remodeling the source url in order to match the format of newsapi
@@ -76,17 +74,20 @@ if source.find('www.') != -1:
     source = source.replace('www.', '')
 if source.find('edition.') != -1: # especially because cnn is sometimes referenced as edition.cnn
     source = source.replace('edition.', '')
+recherche_source = newsapi.get_everything(domains = source)
+number_of_article=recherche_source.get("totalResults")
+print(number_of_article)
+print(score)
+if number_of_article > 100:
+    score = score +20
 i=0
 source_2 =''
 while source[i]!= '.':
     source_2+= source[i]
     i=i+1
 print(source_2)
- # Finding all the articles from that source
-recherche_source = newsapi.get_everything(q=source_2)
-number_of_article=recherche_source.get("totalResults")
-print(number_of_article)
-
-if number_of_article > 100:
-    score = 100
+if source_2 == 'theguardian' or source_2 == 'nytimes':
+    score = score +20
 print(score)
+if score >100:
+    score =100

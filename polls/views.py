@@ -68,8 +68,6 @@ def score_creation(request):
         score_2 = recherche.get("totalResults")
         score=(score_1+score_2)/2
         score =score*100/100
-        if score >100:
-            score =100
         # Let's find if the source can be trusted
         source = article.source_url
         # Remodeling the source url in order to match the format of newsapi
@@ -82,18 +80,20 @@ def score_creation(request):
         if source.find('edition.') != -1: # especially because cnn is sometimes referenced as edition.cnn
             source = source.replace('edition.', '')
         # Finding all the articles from that source
+        recherche_source = newsapi.get_everything(domains =source)
+        number_of_article = recherche_source.get("totalResults")
+        print(number_of_article)
+        if number_of_article > 100:
+            score = 100
+        #if there are more than 100 articles from that source, we consider automatically that the article is 100 % reliable
         i = 0
         source_2 = ''
         while source[i] != '.':
             source_2 += source[i]
             i = i + 1
-        print(source_2)
-        # Finding all the articles from that source
-        recherche_source = newsapi.get_everything(q=source_2)
-        number_of_article = recherche_source.get("totalResults")
-        print(number_of_article)
-        #if there are more then 100 articles from that source, we consider automatically that the article is 100 % reliable
-        if number_of_article > 100:
+        if source_2 == 'theguardian' or source_2 == 'nytimes':
+            score = score + 30
+        if score > 100:
             score = 100
     return(locals())
 
@@ -105,9 +105,9 @@ def submit_article(request):
 def send_results(request):
     #Creation of the result page depending on the score value
     score = score_creation(request).get('score')
-    if score >= 100:
+    if score >= 75:
         return(render(request,'polls/results_positive.html',locals()))
-    if score>70 and score <100:
+    if score>40 and score <75:
         return(render(request,'polls/results_medium.html',locals()))
     else:
         return (render(request, 'polls/results_negative.html', locals()))
