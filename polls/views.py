@@ -8,6 +8,7 @@ import newsapi
 from newsapi import NewsApiClient
 from newspaper import Article
 newsapi = NewsApiClient(api_key='b887d1939c004198a6f027703cb318e6')
+class NotAStringError(ValueError): pass
 
 # Create your views here.
 def score_creation(request):
@@ -15,6 +16,8 @@ def score_creation(request):
     form = ArticleUrl(request.POST)
     if form.is_valid(): #Check if form is valid
         url = form.cleaned_data['Article'] #Get the data
+        if not (isinstance(url,str)):
+            raise NotAStringError('URL should be a string')
         article = Article(url)
         # Let's calculate the score with an "automatic" method : key words in the whole article
         # Getting the article
