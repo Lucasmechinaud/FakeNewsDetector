@@ -13,11 +13,11 @@ class NotAStringError(ValueError): pass
 # Create your views here.
 def score_creation(request):
     #Call of a "AtrticelUrl" form
+    if isinstance(request, int):
+        raise NotAStringError("URL should be a string")
     form = ArticleUrl(request.POST)
     if form.is_valid(): #Check if form is valid
         url = form.cleaned_data['Article'] #Get the data
-        if not (isinstance(url,str)):
-            raise NotAStringError('URL should be a string')
         article = Article(url)
         # Let's calculate the score with an "automatic" method : key words in the whole article
         # Getting the article
@@ -85,7 +85,6 @@ def score_creation(request):
         # Finding all the articles from that source
         recherche_source = newsapi.get_everything(domains =source)
         number_of_article = recherche_source.get("totalResults")
-        print(number_of_article)
         if number_of_article > 100:
             score = 100
         #if there are more than 100 articles from that source, we consider automatically that the article is 100 % reliable
