@@ -70,7 +70,7 @@ def score_creation(request):
         recherche = newsapi.get_everything(qintitle=(key_words_2[0] + key_words_2[1]))
         score_2 = recherche.get("totalResults")
         score=(score_1+score_2)/2
-        score =score*100/100
+        score =score*100/100 # can be modify to change score ratio
         # Let's find if the source can be trusted
         source = article.source_url
         # Remodeling the source url in order to match the format of newsapi
